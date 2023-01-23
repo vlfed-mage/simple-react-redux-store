@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class App extends Component {
-    render() {
-        return <div className='react__app'>sample</div>
-    }
+import LoaderIndicator from "../loader-indicator";
+
+const App = () => {
+    return (
+        <LoaderIndicator />
+    )
 };
+
+export default App;
