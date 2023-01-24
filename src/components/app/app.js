@@ -1,13 +1,19 @@
 import React, { useContext } from 'react';
+import {Route, Switch} from "react-router-dom";
 
-import LoaderIndicator from "../loader-indicator";
-import BookstoreServiceContext from "../bookstore-service-context";
+import Header from "../header";
+import { CartPage, HomePage } from "../pages";
 
 const App = () => {
-    const { getBooks } = useContext(BookstoreServiceContext);
-    console.log(getBooks());
     return (
-        <LoaderIndicator />
+        <>
+            <Header />
+            <Switch>
+                <Route path='/' component={ HomePage } exact />
+                <Route path='/cart-page' component={ CartPage } />
+                <Route render={ () => <h2>404</h2> } />
+            </Switch>
+        </>
     )
 };
 
