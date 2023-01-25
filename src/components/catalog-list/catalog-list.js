@@ -1,11 +1,13 @@
 import React from "react";
 
 import CatalogListItem from "../catalog=list-item";
+import { connect } from "react-redux";
 
 const CatalogList = ({ books }) => {
     const bookList = books.map((book) => {
+        const { id } = book;
         return (
-            <li>
+            <li key={ id }>
                 <CatalogListItem book={ book } />
             </li>
         );
@@ -18,4 +20,8 @@ const CatalogList = ({ books }) => {
     );
 };
 
-export default CatalogList;
+const mapStateToProps = ({ books }) => {
+    return { books }
+};
+
+export default connect(mapStateToProps)(CatalogList);
