@@ -23,7 +23,7 @@ const CatalogList = ({ books, booksLoader }) => {
     });
 
     return (
-        <ul>
+        <ul className="catalog-list">
             { bookList }
         </ul>
     );
