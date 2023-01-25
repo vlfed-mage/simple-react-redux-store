@@ -4,18 +4,18 @@ import { useContext, useEffect } from "react";
 import CatalogListItem from "../catalog=list-item";
 import { connect } from "react-redux";
 import BookStoreServicesContext from "../bookstore-service-context";
-import { booksLoader } from "../../actions";
+import * as actions from "../../actions";
 import LoaderIndicator from "../loader-indicator";
 
-const CatalogList = ({ books, loading, booksLoader }) => {
-    const { getBooks } = useContext(BookStoreServicesContext);
+const CatalogList = ({ books, loading, ...actions }) => {
+    const { getBooks } = useContext(BookStoreServicesContext),
+    { booksLoader, booksRequested } = actions;
 
     useEffect(() => {
+        booksRequested();
         getBooks()
             .then((data) => booksLoader(data));
     }, []);
-
-    console.log(books, loading);
 
     const bookList = books.map((book) => {
         const { id } = book;
@@ -42,4 +42,4 @@ const mapStateToProps = ({ books, loading }) => {
     return { books, loading }
 };
 
-export default connect(mapStateToProps, { booksLoader })(CatalogList);
+export default connect(mapStateToProps, actions)(CatalogList);
