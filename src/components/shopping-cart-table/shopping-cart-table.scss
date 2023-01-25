@@ -1,0 +1,15 @@
+.shopping-cart-table {
+    margin-top: 45px;
+
+    .total {
+        text-align: right;
+        font-size: 1.3rem;
+        margin-right: 10px;
+    }
+
+    button {
+        &:nth-child(n+2) {
+            margin-left: 5px;
+        }
+    }
+}
