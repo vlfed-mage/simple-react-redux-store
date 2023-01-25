@@ -4,7 +4,6 @@ import { Route, Switch } from "react-router-dom";
 
 import Header from "../header";
 import { CartPage, HomePage } from "../pages";
-import CatalogList from "../catalog-list";
 
 const App = () => {
     return (
