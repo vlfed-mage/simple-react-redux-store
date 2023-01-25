@@ -1,3 +1,9 @@
-.catalog-list {
-    list-style: none;
+.catalog {
+    position: relative;
+    min-height: 320px;
+
+    &-list {
+        list-style: none;
+        padding: 0;
+    }
 }

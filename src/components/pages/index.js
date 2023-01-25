@@ -4,4 +4,4 @@ import CartPage from "./cart-page";
 export {
     HomePage,
     CartPage
-}
+};

@@ -17,4 +17,4 @@ const CatalogListItem = ({ book }) => {
     );
 };
 
-export default CatalogListItem
+export default CatalogListItem;
