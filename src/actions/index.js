@@ -5,4 +5,13 @@ const booksLoader = (newBooks) => {
     }
 }
 
-export { booksLoader };
+const booksRequested = () => {
+    return {
+        type: 'BOOKS_REQUESTED',
+    }
+}
+
+export {
+    booksLoader,
+    booksRequested
+};

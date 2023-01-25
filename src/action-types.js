@@ -1,3 +1,7 @@
 const BOOKS_LOADED = 'BOOKS_LOADED';
+const BOOKS_REQUESTED = 'BOOKS_REQUESTED';
 
-export { BOOKS_LOADED };
+export {
+    BOOKS_LOADED,
+    BOOKS_REQUESTED,
+};
