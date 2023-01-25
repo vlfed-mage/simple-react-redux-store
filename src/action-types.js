@@ -1,7 +1,3 @@
-const actionTypes = () => {
-    return {
-        BOOKS_LOADED: 'BOOKS_LOADED'
-    }
-}
+const BOOKS_LOADED = 'BOOKS_LOADED';
 
-export default actionTypes;
+export { BOOKS_LOADED };

@@ -1,4 +1,3 @@
-
 const booksLoader = (newBooks) => {
     return {
         type: 'BOOKS_LOADED',
