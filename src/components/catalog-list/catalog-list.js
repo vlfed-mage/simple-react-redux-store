@@ -1,5 +1,6 @@
 import React from "react";
 import { useContext, useEffect } from "react";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import * as actions from "../../actions";
@@ -47,11 +48,11 @@ const mapStateToProps = ({ books, loading, error }) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-    const { booksLoader, booksRequested, booksError } = actions
+    const { booksLoader, booksRequested, booksError } = bindActionCreators(actions, dispatch);
     return {
-        booksLoader: (newBooks) => dispatch(booksLoader(newBooks)),
-        booksRequested: () => dispatch(booksRequested()),
-        booksError: (error) => dispatch(booksError(error)),
+        booksLoader,
+        booksRequested,
+        booksError
     }
 }
 
