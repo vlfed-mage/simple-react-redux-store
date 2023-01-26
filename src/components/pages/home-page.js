@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 
+import BookStoreServicesContext from "../bookstore-service-context";
 import CatalogList from "../catalog-list";
 
 const HomePage = () => {
+    const { getBooks } = useContext(BookStoreServicesContext)
+
     return (
-        <CatalogList />
+        <CatalogList getBooks={ getBooks } /> // just for using ownProps in mapDispatchToProps
     )
 };
 

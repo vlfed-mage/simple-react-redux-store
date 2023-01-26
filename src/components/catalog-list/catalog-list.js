@@ -1,23 +1,19 @@
 import React from "react";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import * as actions from "../../actions";
 
 import CatalogListItem from "../catalog=list-item";
-import BookStoreServicesContext from "../bookstore-service-context";
 import LoaderIndicator from "../loader-indicator";
 import ErrorIndicator from "../error-indicator";
 
 const CatalogList = ({ books, loading, error, ...otherProps }) => {
-    const { getBooks } = useContext(BookStoreServicesContext),
-        { booksLoader, booksRequested, booksError } = otherProps;
+    const { booksRequested, fetchBooks } = otherProps;
 
     useEffect(() => {
-        getBooks()
-            .then((data) => booksLoader(data))
-            .catch((error) => booksError(error));
+        fetchBooks();
         return () => booksRequested();
     }, []);
 
@@ -49,10 +45,15 @@ const mapStateToProps = ({ books, loading, error }) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     const { booksLoader, booksRequested, booksError } = bindActionCreators(actions, dispatch);
+    const { getBooks } = ownProps; // get from CatalogList component just for using ownProps instead of using useContext
+
     return {
-        booksLoader,
         booksRequested,
-        booksError
+        fetchBooks: () => {
+            getBooks()
+                .then((data) => booksLoader(data))
+                .catch((error) => booksError(error));
+        }
     }
 }
 
