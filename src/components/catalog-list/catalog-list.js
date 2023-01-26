@@ -1,23 +1,19 @@
 import React from "react";
 import { useContext, useEffect } from "react";
+import { connect } from "react-redux";
+
+import * as actions from "../../actions";
 
 import CatalogListItem from "../catalog=list-item";
-import { connect } from "react-redux";
 import BookStoreServicesContext from "../bookstore-service-context";
-import * as actions from "../../actions";
 import LoaderIndicator from "../loader-indicator";
+import ErrorIndicator from "../error-indicator";
 
-const CatalogList = ({ books, loading, ...actions }) => {
+const CatalogList = ({ books, loading, error, ...actions }) => {
     const { getBooks } = useContext(BookStoreServicesContext),
-    { booksLoader, booksRequested } = actions;
+    { booksLoader, booksRequested, booksError } = actions,
 
-    useEffect(() => {
-        booksRequested();
-        getBooks()
-            .then((data) => booksLoader(data));
-    }, []);
-
-    const bookList = books.map((book) => {
+    bookList = books.map((book) => {
         const { id } = book;
         return (
             <li key={ id }>
@@ -26,10 +22,18 @@ const CatalogList = ({ books, loading, ...actions }) => {
         );
     });
 
+    useEffect(() => {
+        getBooks()
+            .then((data) => booksLoader(data))
+            .catch((error) => booksError(error));
+        return () => booksRequested();
+    }, []);
+
     return (
         <div className='catalog'>
             { loading && <LoaderIndicator /> }
-            { !loading &&
+            { error && <ErrorIndicator /> }
+            { !loading && !error &&
                 <ul className="catalog-list">
                     { bookList }
                 </ul>
@@ -38,8 +42,8 @@ const CatalogList = ({ books, loading, ...actions }) => {
     );
 };
 
-const mapStateToProps = ({ books, loading }) => {
-    return { books, loading }
+const mapStateToProps = ({ books, loading, error }) => {
+    return { books, loading, error }
 };
 
 export default connect(mapStateToProps, actions)(CatalogList);
