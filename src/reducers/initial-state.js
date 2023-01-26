@@ -1,6 +1,7 @@
 const initialState = {
     books: [],
-    loading: true
+    loading: true,
+    error: null
 };
 
 export default initialState;

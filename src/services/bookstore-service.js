@@ -19,9 +19,11 @@ const bookstoreService = () => {
 
     return {
         getBooks() {
-            return new Promise((resolve) => {
+            return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    resolve(data)
+                    Math.random() > 0.75
+                        ? reject(new Error('Something get terrible wrong'))
+                        : resolve(data);
                 }, 800)
             });
         }
