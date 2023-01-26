@@ -9,18 +9,9 @@ import BookStoreServicesContext from "../bookstore-service-context";
 import LoaderIndicator from "../loader-indicator";
 import ErrorIndicator from "../error-indicator";
 
-const CatalogList = ({ books, loading, error, ...actions }) => {
+const CatalogList = ({ books, loading, error, ...otherProps }) => {
     const { getBooks } = useContext(BookStoreServicesContext),
-    { booksLoader, booksRequested, booksError } = actions,
-
-    bookList = books.map((book) => {
-        const { id } = book;
-        return (
-            <li key={ id }>
-                <CatalogListItem book={ book } />
-            </li>
-        );
-    });
+        { booksLoader, booksRequested, booksError } = otherProps;
 
     useEffect(() => {
         getBooks()
@@ -28,6 +19,15 @@ const CatalogList = ({ books, loading, error, ...actions }) => {
             .catch((error) => booksError(error));
         return () => booksRequested();
     }, []);
+
+    const bookList = books.map((book) => {
+        const { id } = book;
+        return (
+            <li key={ id }>
+                <CatalogListItem book={ book } />
+            </li>
+        );
+    });
 
     return (
         <div className='catalog'>
@@ -46,4 +46,13 @@ const mapStateToProps = ({ books, loading, error }) => {
     return { books, loading, error }
 };
 
-export default connect(mapStateToProps, actions)(CatalogList);
+const mapDispatchToProps = (dispatch, ownProps) => {
+    const { booksLoader, booksRequested, booksError } = actions
+    return {
+        booksLoader: (newBooks) => dispatch(booksLoader(newBooks)),
+        booksRequested: () => dispatch(booksRequested()),
+        booksError: (error) => dispatch(booksError(error)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CatalogList);
