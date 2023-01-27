@@ -1,22 +1,19 @@
 import React from 'react';
 
 import { connect } from "react-redux";
-import {
-    onDelete,
-    onIncrease,
-    onDecrease
-} from '../../actions';
+import * as actions from '../../actions';
 
-const ShoppingCartTable = ({ cartTable, cartTotal }) => {
+const ShoppingCartTable = ({ cartTable, cartTotal, ...otherProps }) => {
+    const { onDelete, onIncrease, onDecrease } = otherProps;
 
     const rows = cartTable.map((row, idx) => {
-        const { id, title, price } = row;
+        const { id, title, price, count } = row;
 
         return (
             <tr key={ id }>
                 <td>{ idx + 1 }</td>
                 <td>{ title }</td>
-                <td>{ Math.floor(Math.random()*5+1) }</td>
+                <td>{ count }</td>
                 <td>{`$${ price }`}</td>
                 <td>
                     <button
@@ -70,10 +67,12 @@ const mapStateToProps = ({ cartTable, cartTotal }) => {
     return { cartTable, cartTotal }
 };
 
-const mapDispatchToProps = {
-    onDelete,
-    onIncrease,
-    onDecrease
-};
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         onDelete: (id) => dispatch(onDelete(id)),
+//         onIncrease: (id) => dispatch(onIncrease(id)),
+//         onDecrease: (id) => dispatch(onDecrease(id))
+//     }
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCartTable);
+export default connect(mapStateToProps, actions)(ShoppingCartTable);
