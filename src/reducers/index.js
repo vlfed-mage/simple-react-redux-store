@@ -12,7 +12,6 @@ const {
 } = actionTypes;
 
 const reducer = (state = initialState, action) => {
-    console.log(action.type);
 
     switch (action.type) {
         case FETCH_BOOKS_REQUEST:
@@ -47,19 +46,23 @@ const reducer = (state = initialState, action) => {
                 ...state
             };
         case BOOK_ADDED_TO_CART:
-            const book = state.books.find((book) => action.payload === book.id);
-            const newCartItem = {
+            const bookId = action.payload,
+            { books, cartTable } = state,
+            condition = (item) => bookId === item.id,
+            book = books.find((book) => condition(book)),
+            newCartTableItem = {
+                count: 1,
                 id: book.id,
                 title: book.title,
-                count: 1,
                 price: book.price,
-            };
+            },
+            updatedCartTable = cartTable.some((r) => condition(r))
+                ? cartTable.map((r) => condition(r) ? { ...r, count: r.count + 1, price: r.price + book.price } : r )
+                : [ ...cartTable, newCartTableItem ];
+
             return {
                 ...state,
-                cartTable: [
-                    ...state.cartTable,
-                    newCartItem
-                ]
+                cartTable: updatedCartTable
             };
         default:
             return state;
