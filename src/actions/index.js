@@ -4,35 +4,50 @@ const {
     FETCH_BOOKS_SUCCESS,
     FETCH_BOOKS_REQUEST,
     FETCH_BOOKS_FAILURE
-} = actionTypes;
+} = actionTypes,
 
-const booksLoader = (newBooks) => {
+booksLoader = (newBooks) => {
     return {
         type: FETCH_BOOKS_SUCCESS,
         payload: newBooks
     }
-}
+},
 
-const booksRequested = () => {
+booksRequested = () => {
     return {
         type: FETCH_BOOKS_REQUEST,
     }
-}
+},
 
-const booksError = (error) => {
+booksError = (error) => {
     return {
         type: FETCH_BOOKS_FAILURE,
         payload: error
     }
-}
+},
 
-const fetchBooks = (getBooks, dispatch) => () => {
+fetchBooks = (getBooks, dispatch) => () => {
     dispatch(booksRequested());
     getBooks()
         .then((data) => dispatch(booksLoader(data)))
         .catch((error) => dispatch(booksError(error)));
-}
+},
+
+onDelete = (id) => {
+    console.log('onDeleted: ', id);
+},
+
+onIncrease = (id) => {
+    console.log('onIncreased: ', id);
+},
+
+onDecrease = (id) => {
+    console.log('onDecreased: ', id);
+};
 
 export {
-    fetchBooks
+    fetchBooks,
+    onDelete,
+    onIncrease,
+    onDecrease
 };

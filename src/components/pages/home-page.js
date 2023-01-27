@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import BookStoreServicesContext from "../bookstore-service-context";
-import CatalogListContainer from "../../containers/catalog-list-container";
+import { CatalogListContainer } from "../../containers";
 
 const HomePage = () => {
     const { getBooks } = useContext(BookStoreServicesContext)
