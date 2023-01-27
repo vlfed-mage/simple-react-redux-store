@@ -3,7 +3,11 @@ import * as actionTypes from '../action-types';
 const {
     FETCH_BOOKS_SUCCESS,
     FETCH_BOOKS_REQUEST,
-    FETCH_BOOKS_FAILURE
+    FETCH_BOOKS_FAILURE,
+    CART_ITEM_DELETE,
+    CART_ITEM_INCREASE,
+    CART_ITEM_DECREASE,
+    BOOK_ADDED_TO_CART
 } = actionTypes,
 
 booksLoader = (newBooks) => {
@@ -34,20 +38,34 @@ fetchBooks = (getBooks, dispatch) => () => {
 },
 
 onDelete = (id) => {
-    console.log('onDeleted: ', id);
+    return {
+        type: CART_ITEM_DELETE,
+    }
 },
 
 onIncrease = (id) => {
-    console.log('onIncreased: ', id);
+    return {
+        type: CART_ITEM_INCREASE,
+    }
 },
 
 onDecrease = (id) => {
-    console.log('onDecreased: ', id);
+    return {
+        type: CART_ITEM_DECREASE,
+    }
+},
+
+onAddedToCart = (id) => {
+    return {
+        type: BOOK_ADDED_TO_CART,
+        payload: id
+    }
 };
 
 export {
     fetchBooks,
     onDelete,
     onIncrease,
-    onDecrease
+    onDecrease,
+    onAddedToCart
 };
