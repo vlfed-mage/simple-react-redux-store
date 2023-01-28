@@ -11,8 +11,38 @@ const {
     BOOK_ADDED_TO_CART
 } = actionTypes;
 
+const checkID = (item, action) => {
+    return action.payload === item.id
+};
+
+const updateCartTable = (state, action, sign = 1) => {
+    const { books, cartTable } = state;
+
+    const book = books.find((book) => checkID(book, action)),
+    { id, title, price } = book,
+    newCartTableItem = {
+        count: 1,
+        id,
+        title,
+        price,
+    };
+
+    return cartTable.some((r) => checkID(r, action))
+        ? cartTable.map((r) => {
+            if (checkID(r, action)) {
+                return { ...r, count: r.count + sign, price: r.price + sign * book.price };
+            }
+            return r;
+        })
+        : [ ...cartTable, newCartTableItem ];
+};
+
+const removeCartItem = (state, action) => {
+    return state.cartTable.filter((r) => checkID(r, action))
+}
+
 const reducer = (state = initialState, action) => {
-    const { books, cartTable, cartTotal } = state;
+    const { books, cartTable } = state;
 
     switch (action.type) {
         case FETCH_BOOKS_REQUEST:
@@ -37,35 +67,22 @@ const reducer = (state = initialState, action) => {
         case CART_ITEM_DELETE:
             return {
                 ...state,
-                cartTable: cartTable.filter((r) => r.id !== action.payload)
+                cartTable: removeCartItem(state, action)
             };
         case CART_ITEM_INCREASE:
             return {
                 ...state,
-                cartTable: cartTable.map((r) => r.id === action.payload ? { ...r, count: r.count + 1 } : r)
+                cartTable: updateCartTable(state, action)
             };
         case CART_ITEM_DECREASE:
             return {
                 ...state,
-                cartTable: cartTable.map((r) => r.id === action.payload ? { ...r, count: r.count - 1 } : r)
+                cartTable: updateCartTable(state, action, -1)
             };
         case BOOK_ADDED_TO_CART:
-            const condition = (item) => action.payload === item.id,
-            book = books.find((book) => condition(book)),
-            { id, title, price } = book,
-            newCartTableItem = {
-                count: 1,
-                id,
-                title,
-                price,
-            },
-            updatedCartTable = cartTable.some((r) => condition(r))
-                ? cartTable.map((r) => condition(r) ? { ...r, count: r.count + 1, price: r.price + price } : r )
-                : [ ...cartTable, newCartTableItem ];
-
             return {
                 ...state,
-                cartTable: updatedCartTable
+                cartTable: updateCartTable(state, action)
             };
         default:
             return state;
