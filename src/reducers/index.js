@@ -12,6 +12,7 @@ const {
 } = actionTypes;
 
 const reducer = (state = initialState, action) => {
+    const { books, cartTable, cartTotal } = state;
 
     switch (action.type) {
         case FETCH_BOOKS_REQUEST:
@@ -34,32 +35,32 @@ const reducer = (state = initialState, action) => {
                 error: action.payload
             };
         case CART_ITEM_DELETE:
-            console.log('CART_ITEM_DELETE', action.payload)
             return {
                 ...state,
-                cartTable: state.cartTable.filter((row) => row.id !== action.payload)
+                cartTable: cartTable.filter((r) => r.id !== action.payload)
             };
         case CART_ITEM_INCREASE:
             return {
-                ...state
+                ...state,
+                cartTable: cartTable.map((r) => r.id === action.payload ? { ...r, count: r.count + 1 } : r)
             };
         case CART_ITEM_DECREASE:
             return {
-                ...state
+                ...state,
+                cartTable: cartTable.map((r) => r.id === action.payload ? { ...r, count: r.count - 1 } : r)
             };
         case BOOK_ADDED_TO_CART:
-            const bookId = action.payload,
-            { books, cartTable } = state,
-            condition = (item) => bookId === item.id,
+            const condition = (item) => action.payload === item.id,
             book = books.find((book) => condition(book)),
+            { id, title, price } = book,
             newCartTableItem = {
                 count: 1,
-                id: book.id,
-                title: book.title,
-                price: book.price,
+                id,
+                title,
+                price,
             },
             updatedCartTable = cartTable.some((r) => condition(r))
-                ? cartTable.map((r) => condition(r) ? { ...r, count: r.count + 1, price: r.price + book.price } : r )
+                ? cartTable.map((r) => condition(r) ? { ...r, count: r.count + 1, price: r.price + price } : r )
                 : [ ...cartTable, newCartTableItem ];
 
             return {
