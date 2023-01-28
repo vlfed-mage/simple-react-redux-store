@@ -20,19 +20,16 @@ const ShoppingCartTable = ({ cartTable, cartTotal, ...otherProps }) => {
                         className="btn btn-outline-danger btn-sm float-right"
                         onClick={ () => onDelete(id) } >
                         <i className="fa fa-trash"/>
-                        delete
                     </button>
                     <button
                         className="btn btn-outline-success btn-sm float-right"
                         onClick={ () => onIncrease(id) } >
                         <i className="fa fa-plus-circle"/>
-                        plus
                     </button>
                     <button
                         className="btn btn-outline-warning btn-sm float-right"
                         onClick={ () => onDecrease(id) } >
                         <i className="fa fa-minus-circle"/>
-                        minus
                     </button>
                 </td>
             </tr>

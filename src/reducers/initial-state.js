@@ -3,7 +3,7 @@ const initialState = {
     loading: true,
     error: null,
     cartTable: [],
-    cartTotal: 240
+    cartTotal: 0
 };
 
 export default initialState;
