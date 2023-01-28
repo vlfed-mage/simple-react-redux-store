@@ -34,8 +34,10 @@ const reducer = (state = initialState, action) => {
                 error: action.payload
             };
         case CART_ITEM_DELETE:
+            console.log('CART_ITEM_DELETE', action.payload)
             return {
-                ...state
+                ...state,
+                cartTable: state.cartTable.filter((row) => row.id !== action.payload)
             };
         case CART_ITEM_INCREASE:
             return {

@@ -40,18 +40,21 @@ fetchBooks = (getBooks, dispatch) => () => {
 onDelete = (id) => {
     return {
         type: CART_ITEM_DELETE,
+        payload: id
     }
 },
 
 onIncrease = (id) => {
     return {
         type: CART_ITEM_INCREASE,
+        payload: id
     }
 },
 
 onDecrease = (id) => {
     return {
         type: CART_ITEM_DECREASE,
+        payload: id
     }
 },
 
