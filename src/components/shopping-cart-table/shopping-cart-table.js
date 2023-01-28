@@ -27,6 +27,7 @@ const ShoppingCartTable = ({ cartTable, cartTotal, ...otherProps }) => {
                         <i className="fa fa-plus-circle"/>
                     </button>
                     <button
+                        disabled={ count <= 1 }
                         className="btn btn-outline-warning btn-sm float-right"
                         onClick={ () => onDecrease(id) } >
                         <i className="fa fa-minus-circle"/>
@@ -63,13 +64,5 @@ const ShoppingCartTable = ({ cartTable, cartTotal, ...otherProps }) => {
 const mapStateToProps = ({ cartTable, cartTotal }) => {
     return { cartTable, cartTotal }
 };
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         onDelete: (id) => dispatch(onDelete(id)),
-//         onIncrease: (id) => dispatch(onIncrease(id)),
-//         onDecrease: (id) => dispatch(onDecrease(id))
-//     }
-// };
 
 export default connect(mapStateToProps, actions)(ShoppingCartTable);
