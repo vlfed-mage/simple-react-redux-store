@@ -1,11 +1,7 @@
 import React from 'react';
 
-import { connect } from "react-redux";
-import * as actions from '../../actions';
-
-const ShoppingCartTable = ({ cartTable, cartTotal, ...otherProps }) => {
-    const { onDelete, onIncrease, onDecrease } = otherProps;
-
+const ShoppingCartTable = ({ shoppingCart }) => {
+    const { cartTable, cartTotal, onDelete, onIncrease, onDecrease } = shoppingCart;
     const rows = cartTable.map((row, idx) => {
         const { id, title, price, count } = row;
 
@@ -61,8 +57,4 @@ const ShoppingCartTable = ({ cartTable, cartTotal, ...otherProps }) => {
     );
 };
 
-const mapStateToProps = ({ shoppingCart: { cartTable, cartTotal } }) => {
-    return { cartTable, cartTotal }
-};
-
-export default connect(mapStateToProps, actions)(ShoppingCartTable);
+export default ShoppingCartTable;
