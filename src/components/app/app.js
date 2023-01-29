@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 
 import Header from "../header";
 import { CartPage, HomePage } from "../pages";
-import ShoppingCartTable from "../shopping-cart-table";
+import ShoppingCartTableContainer from "../../containers/shopping-cart-table-container";
 
 const App = () => {
     return (
@@ -15,7 +15,7 @@ const App = () => {
                 <Route path='/cart-page' component={ CartPage } />
                 <Route render={ () => <h2>404</h2> } />
             </Switch>
-            <ShoppingCartTable />
+            <ShoppingCartTableContainer />
         </div>
     )
 };
