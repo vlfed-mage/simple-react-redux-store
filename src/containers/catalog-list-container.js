@@ -29,7 +29,7 @@ const CatalogListContainer = ({ books, loading, error, ...actions }) => {
     );
 };
 
-const mapStateToProps = ({ books, loading, error }) => {
+const mapStateToProps = ({ bookList: { books, loading, error } }) => {
     return { books, loading, error }
 };
 
